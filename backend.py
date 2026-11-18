@@ -284,7 +284,10 @@ def get_all_grievances():
             department,
             summary,
             status,
-            created_at
+            created_at,
+            citizen_name,
+            mobile_number,
+            citizen_address
         FROM grievances
         ORDER BY created_at DESC
     """)
