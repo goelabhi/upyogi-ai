@@ -104,6 +104,16 @@ else:
                 f"{issue['relatedness_score']}"
             )
 
+            st.write("**Evidence:**")
+
+            for evidence in issue["evidence"]:
+                st.write(f"• {evidence}")
+            
+            st.write(
+                "**Recommended action:**",
+                issue["recommended_action"]
+            )
+
     else:
         st.info("No systemic issues detected.")
 
