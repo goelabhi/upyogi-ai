@@ -31,14 +31,38 @@ if role == "Citizen":
 
     st.header("Report a Grievance")
 
+    st.subheader("Citizen Information")
+
+    citizen_name = st.text_input(
+        "Name",
+        placeholder="Enter your full name"
+    )
+
+    mobile_number = st.text_input(
+        "Mobile Number",
+        placeholder="Enter your mobile number"
+    )
+
+    citizen_address = st.text_area(
+        "Address",
+        placeholder="Enter your residential address"
+    )
+
+    st.subheader("Grievance")
+
+    location = st.text_input(
+        "Where is the problem?",
+        placeholder="Example: Mathura, Uttar Pradesh"
+    )
+
     complaint = st.text_area(
         "Describe your problem",
         placeholder="Example: There has been no drinking water in my village for three days..."
     )
 
     uploaded_image = st.file_uploader(
-    "Or upload a photo of the grievance",
-    type=["jpg", "jpeg", "png"]
+        "Or upload a photo of the grievance",
+        type=["jpg", "jpeg", "png"]
     )
 
 if st.button("Submit Grievance", type="primary"):
