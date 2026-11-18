@@ -65,50 +65,50 @@ if role == "Citizen":
         type=["jpg", "jpeg", "png"]
     )
 
-if st.button("Submit Grievance", type="primary"):
-
-    if not complaint.strip() and uploaded_image is None:
-        st.warning("Please describe your grievance or upload a photo.")
-
-    elif uploaded_image is not None:
-
-        image_bytes = uploaded_image.getvalue()
-
-        result = save_image_grievance(
-        image_bytes,
-        citizen_name,
-        mobile_number,
-        citizen_address,
-        location
-)
-
-        st.success("Grievance submitted successfully.")
-
-        st.write("### Grievance Details")
-        st.write("**Category:**", result["category"])
-        st.write("**Location:**", result["location"])
-        st.write("**Urgency:**", result["urgency"])
-        st.write("**Department:**", result["department"])
-        st.write("**Summary:**", result["summary"])
-
-    else:
-
-        result = submit_grievance(
-             complaint,
-             citizen_name,
-             mobile_number,
-             citizen_address,
-             location
-         )
-
-        st.success("Grievance submitted successfully.")
-
-        st.write("### Grievance Details")
-        st.write("**Category:**", result["category"])
-        st.write("**Location:**", result["location"])
-        st.write("**Urgency:**", result["urgency"])
-        st.write("**Department:**", result["department"])
-        st.write("**Summary:**", result["summary"])
+    if st.button("Submit Grievance", type="primary"):
+    
+        if not complaint.strip() and uploaded_image is None:
+            st.warning("Please describe your grievance or upload a photo.")
+    
+        elif uploaded_image is not None:
+    
+            image_bytes = uploaded_image.getvalue()
+    
+            result = save_image_grievance(
+            image_bytes,
+            citizen_name,
+            mobile_number,
+            citizen_address,
+            location
+    )
+    
+            st.success("Grievance submitted successfully.")
+    
+            st.write("### Grievance Details")
+            st.write("**Category:**", result["category"])
+            st.write("**Location:**", result["location"])
+            st.write("**Urgency:**", result["urgency"])
+            st.write("**Department:**", result["department"])
+            st.write("**Summary:**", result["summary"])
+    
+        else:
+    
+            result = submit_grievance(
+                 complaint,
+                 citizen_name,
+                 mobile_number,
+                 citizen_address,
+                 location
+             )
+    
+            st.success("Grievance submitted successfully.")
+    
+            st.write("### Grievance Details")
+            st.write("**Category:**", result["category"])
+            st.write("**Location:**", result["location"])
+            st.write("**Urgency:**", result["urgency"])
+            st.write("**Department:**", result["department"])
+            st.write("**Summary:**", result["summary"])
 
 # =========================
 # OFFICER
