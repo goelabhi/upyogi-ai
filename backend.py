@@ -2,7 +2,10 @@
 import os
 import json
 import sqlite3
+import base64
+import json
 
+from langchain_core.messages import HumanMessage
 from langchain_openrouter import ChatOpenRouter
 from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
@@ -66,6 +69,57 @@ Citizen complaint:
 
     return json.loads(response.content)
 
+def process_image_grievance(image_bytes):
+
+    image_b64 = base64.b64encode(image_bytes).decode("utf-8")
+
+    message = HumanMessage(content=[
+        {
+            "type": "text",
+            "text": """
+            Analyze this image as a citizen grievance.
+            Describe the problem visible in the image in one sentence.
+            """
+        },
+        {
+            "type": "image_url",
+            "image_url": {
+                "url": f"data:image/jpeg;base64,{image_b64}"
+            }
+        }
+    ])
+
+    description = llm.invoke([message]).content
+
+    prompt = f"""
+    You are an AI government grievance classification system.
+
+    Grievance:
+    {description}
+
+    Return ONLY valid JSON with exactly these fields:
+    - category
+    - location
+    - urgency
+    - summary
+
+    Category MUST be exactly one of:
+    Water Supply, Sanitation, Roads, Electricity,
+    Street Lighting, Public Safety, Health, Education, Other.
+
+    If location is unknown, use "Unknown".
+    Do not add markdown or explanation.
+    """
+
+    result = llm.invoke(prompt)
+
+    data = json.loads(result.content)
+
+    data["department"] = get_department(
+        data["category"]
+    )
+
+    return data
 
 def save_grievance(complaint):
 
