@@ -189,7 +189,10 @@ else:
             department,
             summary,
             status,
-            created_at
+            created_at,
+            citizen_name,
+            mobile_number,
+            citizen_address
         ) = grievance
 
         with st.expander(
