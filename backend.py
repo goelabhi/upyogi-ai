@@ -42,6 +42,27 @@ CREATE TABLE IF NOT EXISTS grievances (
 
 conn.commit()
 
+# Add citizen information fields if they do not already exist
+
+cursor.execute("PRAGMA table_info(grievances)")
+existing_columns = [column[1] for column in cursor.fetchall()]
+
+if "citizen_name" not in existing_columns:
+    cursor.execute(
+        "ALTER TABLE grievances ADD COLUMN citizen_name TEXT"
+    )
+
+if "mobile_number" not in existing_columns:
+    cursor.execute(
+        "ALTER TABLE grievances ADD COLUMN mobile_number TEXT"
+    )
+
+if "citizen_address" not in existing_columns:
+    cursor.execute(
+        "ALTER TABLE grievances ADD COLUMN citizen_address TEXT"
+    )
+
+conn.commit()
 
 # ---------- GRIEVANCE PROCESSING ----------
 
