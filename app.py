@@ -74,10 +74,13 @@ if st.button("Submit Grievance", type="primary"):
 
         image_bytes = uploaded_image.getvalue()
 
-        result = process_image_grievance(
-        image_bytes,
-        location
-        )
+       result = save_image_grievance(
+    image_bytes,
+    citizen_name,
+    mobile_number,
+    citizen_address,
+    location
+)
 
         st.success("Grievance submitted successfully.")
 
