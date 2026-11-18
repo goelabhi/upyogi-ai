@@ -69,7 +69,7 @@ Citizen complaint:
 
     return json.loads(response.content)
 
-def process_image_grievance(image_bytes):
+def process_image_grievance(image_bytes, location):
 
     image_b64 = base64.b64encode(image_bytes).decode("utf-8")
 
@@ -115,6 +115,8 @@ def process_image_grievance(image_bytes):
 
     data = json.loads(result.content)
 
+    data["location"] = location
+    
     data["department"] = get_department(
         data["category"]
     )
