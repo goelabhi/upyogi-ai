@@ -99,10 +99,10 @@ else:
                 f"Related grievances: {issue['grievance_ids']}"
             )
 
-            st.write(
-                f"Relatedness score: "
-                f"{issue['relatedness_score']}"
-            )
+            #st.write(
+             #   f"Relatedness score: "
+              #  f"{issue['relatedness_score']}"
+            #)
 
             st.write("**Evidence:**")
 
