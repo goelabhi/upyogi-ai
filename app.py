@@ -198,7 +198,9 @@ else:
         with st.expander(
             f"#{grievance_id} — {category} — {location}"
         ):
-
+            st.write("**Citizen:**", citizen_name)
+            st.write("**Mobile:**", mobile_number)
+            st.write("**Address:**", citizen_address)
             st.write("**Complaint:**", complaint)
             st.write("**Summary:**", summary)
             st.write("**Urgency:**", urgency)
