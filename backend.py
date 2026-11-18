@@ -162,6 +162,48 @@ def process_image_grievance(image_bytes, location):
     )
 
     return data
+def save_image_grievance(
+    image_bytes,
+    citizen_name,
+    mobile_number,
+    citizen_address,
+    location
+):
+
+    data = process_image_grievance(
+        image_bytes,
+        location
+    )
+
+    cursor.execute("""
+        INSERT INTO grievances
+        (
+            complaint,
+            category,
+            location,
+            urgency,
+            department,
+            summary,
+            citizen_name,
+            mobile_number,
+            citizen_address
+        )
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    """, (
+        "[Image grievance]",
+        data["category"],
+        data["location"],
+        data["urgency"],
+        data["department"],
+        data["summary"],
+        citizen_name,
+        mobile_number,
+        citizen_address
+    ))
+
+    conn.commit()
+
+    return data
 
 def save_grievance(
     complaint,
