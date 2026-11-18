@@ -180,13 +180,21 @@ def detect_systemic_issues():
             if relatedness_score >= SYSTEMIC_THRESHOLD:
 
                 issues.append({
-                    "location": g1[3],
-                    "category": g1[2],
-                    "grievance_ids": [g1[0], g2[0]],
-                    "relatedness_score": round(
-                        float(relatedness_score), 3
-                    )
-                })
+    "location": g1[3],
+    "category": g1[2],
+    "grievance_ids": [g1[0], g2[0]],
+    "relatedness_score": round(
+        float(relatedness_score), 3
+    ),
+    "evidence": [
+        g1[6],
+        g2[6]
+    ],
+    "recommended_action": (
+        f"Investigate the underlying {g1[2].lower()} issue "
+        f"affecting multiple complaints in {g1[3]}."
+    )
+})
 
     return issues
 
