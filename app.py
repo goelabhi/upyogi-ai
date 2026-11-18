@@ -2,7 +2,7 @@
 import streamlit as st
 from backend import (
     submit_grievance,
-    process_image_grievance,
+    save_image_grievance,
     get_all_grievances,
     update_status,
     get_officer_intelligence
