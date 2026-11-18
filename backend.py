@@ -163,34 +163,69 @@ def process_image_grievance(image_bytes, location):
 
     return data
 
-def save_grievance(complaint):
+def save_grievance(
+    complaint,
+    citizen_name,
+    mobile_number,
+    citizen_address,
+    location
+):
 
     data = process_grievance(complaint)
 
+    data["location"] = location
+    data["department"] = get_department(
+        data["category"]
+    )
+
     cursor.execute("""
         INSERT INTO grievances
-        (complaint, category, location, urgency, department, summary)
-        VALUES (?, ?, ?, ?, ?, ?)
+        (
+            complaint,
+            category,
+            location,
+            urgency,
+            department,
+            summary,
+            citizen_name,
+            mobile_number,
+            citizen_address
+        )
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
     """, (
         complaint,
         data["category"],
         data["location"],
         data["urgency"],
         data["department"],
-        data["summary"]
+        data["summary"],
+        citizen_name,
+        mobile_number,
+        citizen_address
     ))
 
     conn.commit()
 
     return data
 
-
-def submit_grievance(complaint):
+def submit_grievance(
+    complaint,
+    citizen_name,
+    mobile_number,
+    citizen_address,
+    location
+):
 
     if not complaint.strip():
         return None
 
-    return save_grievance(complaint)
+    return save_grievance(
+        complaint,
+        citizen_name,
+        mobile_number,
+        citizen_address,
+        location
+    )
 
 
 # ---------- OFFICER ----------
