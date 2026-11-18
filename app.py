@@ -74,7 +74,7 @@ if st.button("Submit Grievance", type="primary"):
 
         image_bytes = uploaded_image.getvalue()
 
-       result = process_image_grievance(
+        result = process_image_grievance(
         image_bytes,
         location
         )
