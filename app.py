@@ -2,6 +2,7 @@
 import streamlit as st
 from backend import (
     submit_grievance,
+    process_image_grievance,
     get_all_grievances,
     update_status,
     get_officer_intelligence
@@ -33,6 +34,11 @@ if role == "Citizen":
     complaint = st.text_area(
         "Describe your problem",
         placeholder="Example: There has been no drinking water in my village for three days..."
+    )
+
+    uploaded_image = st.file_uploader(
+    "Or upload a photo of the grievance",
+    type=["jpg", "jpeg", "png"]
     )
 
     if st.button("Submit Grievance", type="primary"):
