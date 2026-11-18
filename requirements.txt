@@ -1,0 +1,6 @@
+
+streamlit
+langchain-openrouter
+python-dotenv
+sentence-transformers
+scikit-learn

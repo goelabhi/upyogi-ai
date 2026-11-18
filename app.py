@@ -1,0 +1,167 @@
+
+import streamlit as st
+from backend import (
+    submit_grievance,
+    get_all_grievances,
+    update_status,
+    get_officer_intelligence
+)
+
+st.set_page_config(
+    page_title="upyogi.ai",
+    page_icon="🏛️",
+    layout="wide"
+)
+
+st.title("🏛️ upyogi.ai")
+st.caption("AI-powered grievance intelligence")
+
+role = st.sidebar.radio(
+    "Select portal",
+    ["Citizen", "Officer"]
+)
+
+
+# =========================
+# CITIZEN
+# =========================
+
+if role == "Citizen":
+
+    st.header("Report a Grievance")
+
+    complaint = st.text_area(
+        "Describe your problem",
+        placeholder="Example: There has been no drinking water in my village for three days..."
+    )
+
+    if st.button("Submit Grievance", type="primary"):
+
+        if not complaint.strip():
+            st.warning("Please describe your grievance.")
+
+        else:
+            result = submit_grievance(complaint)
+
+            st.success("Grievance submitted successfully.")
+
+            st.write("### Grievance Details")
+            st.write("**Category:**", result["category"])
+            st.write("**Location:**", result["location"])
+            st.write("**Urgency:**", result["urgency"])
+            st.write("**Department:**", result["department"])
+            st.write("**Summary:**", result["summary"])
+
+
+# =========================
+# OFFICER
+# =========================
+
+else:
+
+    st.header("Officer Dashboard")
+
+    intelligence = get_officer_intelligence()
+    grievances = get_all_grievances()
+
+    col1, col2, col3 = st.columns(3)
+
+    col1.metric(
+        "Total Grievances",
+        intelligence["total_grievances"]
+    )
+
+    col2.metric(
+        "New Grievances",
+        intelligence["new_grievances"]
+    )
+
+    col3.metric(
+        "Systemic Issues",
+        len(intelligence["systemic_issues"])
+    )
+
+    st.divider()
+
+    st.subheader("🚨 Systemic Issues")
+
+    if intelligence["systemic_issues"]:
+
+        for issue in intelligence["systemic_issues"]:
+
+            st.warning(
+                f"{issue['priority']} Priority — "
+                f"{issue['location']} — "
+                f"{issue['category']}"
+            )
+
+            st.write(
+                f"Related grievances: {issue['grievance_ids']}"
+            )
+
+            st.write(
+                f"Relatedness score: "
+                f"{issue['relatedness_score']}"
+            )
+
+    else:
+        st.info("No systemic issues detected.")
+
+    st.divider()
+
+    st.subheader("All Grievances")
+
+    for grievance in grievances:
+
+        (
+            grievance_id,
+            complaint,
+            category,
+            location,
+            urgency,
+            department,
+            summary,
+            status,
+            created_at
+        ) = grievance
+
+        with st.expander(
+            f"#{grievance_id} — {category} — {location}"
+        ):
+
+            st.write("**Complaint:**", complaint)
+            st.write("**Summary:**", summary)
+            st.write("**Urgency:**", urgency)
+            st.write("**Department:**", department)
+            st.write("**Status:**", status)
+            st.write("**Created:**", created_at)
+
+            new_status = st.selectbox(
+                "Update status",
+                [
+                    "New",
+                    "Assigned",
+                    "In Progress",
+                    "Resolved"
+                ],
+                index=[
+                    "New",
+                    "Assigned",
+                    "In Progress",
+                    "Resolved"
+                ].index(status),
+                key=f"status_{grievance_id}"
+            )
+
+            if st.button(
+                "Update",
+                key=f"update_{grievance_id}"
+            ):
+
+                update_status(
+                    grievance_id,
+                    new_status
+                )
+
+                st.success("Status updated.")
+                st.rerun()
