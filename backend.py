@@ -68,7 +68,26 @@ Citizen complaint:
     response = llm.invoke(prompt)
 
     return json.loads(response.content)
+DEPARTMENT_MAP = {
+    "Water Supply": "Water Supply Department",
+    "Sanitation": "Municipal Corporation",
+    "Roads": "Public Works",
+    "Electricity": "Electricity Department",
+    "Street Lighting": "Municipal Corporation",
+    "Public Safety": "Police",
+    "Health": "Health Department",
+    "Education": "Education Department",
+    "Other": "Relevant Department"
+}
 
+
+def get_department(category):
+
+    return DEPARTMENT_MAP.get(
+        category,
+        "Relevant Department"
+    )
+    
 def process_image_grievance(image_bytes, location):
 
     image_b64 = base64.b64encode(image_bytes).decode("utf-8")
