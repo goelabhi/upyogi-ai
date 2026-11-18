@@ -90,7 +90,13 @@ if st.button("Submit Grievance", type="primary"):
 
     else:
 
-        result = submit_grievance(complaint)
+        result = submit_grievance(
+             complaint,
+             citizen_name,
+             mobile_number,
+             citizen_address,
+             location
+         )
 
         st.success("Grievance submitted successfully.")
 
