@@ -38,17 +38,21 @@ def transcribe_voice(audio_bytes):
 
     text = result["text"].strip()
 
-    try:
-        text = transliterate(
-            text,
-            sanscript.URDU,
-            sanscript.DEVANAGARI
-        )
-    except Exception:
-        pass
+    prompt = f"""
+Convert the following speech transcription into natural Hindi
+written in Devanagari script.
 
-    return text
+Preserve the exact meaning.
+Do not add or remove information.
+Return ONLY the Hindi text.
 
+Transcription:
+{text}
+"""
+
+    response = llm.invoke(prompt)
+
+    return response.content.strip()
 # ---------- DATABASE ----------
 
 conn = sqlite3.connect("upyogi.db", check_same_thread=False)
