@@ -28,7 +28,7 @@ def transcribe_voice(audio_bytes):
     with open("temp_audio.wav", "wb") as f:
         f.write(audio_bytes)
 
-   result = whisper_model.transcribe(
+    result = whisper_model.transcribe(
     "temp_audio.wav",
     language="hi",
     task="transcribe"
