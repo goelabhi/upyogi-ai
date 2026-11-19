@@ -76,29 +76,29 @@ if role == "Citizen":
             st.warning("Please describe your grievance or upload a photo.")
         elif audio_input is not None:
 
-        audio_bytes = audio_input.getvalue()
+            audio_bytes = audio_input.getvalue()
 
-        transcribed_text = transcribe_voice(audio_bytes)
+            transcribed_text = transcribe_voice(audio_bytes)
 
-        result = submit_grievance(
-            transcribed_text,
-            citizen_name,
-            mobile_number,
-            citizen_address,
-            location
-        )
-
-        st.success("Voice grievance submitted successfully.")
+            result = submit_grievance(
+                transcribed_text,
+                citizen_name,
+                mobile_number,
+                citizen_address,
+                location
+            )
     
-        st.write("### Transcribed Grievance")
-        st.write(transcribed_text)
-    
-        st.write("### Grievance Details")
-        st.write("**Category:**", result["category"])
-        st.write("**Location:**", result["location"])
-        st.write("**Urgency:**", result["urgency"])
-        st.write("**Department:**", result["department"])
-        st.write("**Summary:**", result["summary"])
+            st.success("Voice grievance submitted successfully.")
+        
+            st.write("### Transcribed Grievance")
+            st.write(transcribed_text)
+        
+            st.write("### Grievance Details")
+            st.write("**Category:**", result["category"])
+            st.write("**Location:**", result["location"])
+            st.write("**Urgency:**", result["urgency"])
+            st.write("**Department:**", result["department"])
+            st.write("**Summary:**", result["summary"])
         
         elif uploaded_image is not None:
     
