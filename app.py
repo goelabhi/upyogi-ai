@@ -64,6 +64,10 @@ if role == "Citizen":
         "Or upload a photo of the grievance",
         type=["jpg", "jpeg", "png"]
     )
+    
+    audio_input = st.audio_input(
+    "Or record your grievance"
+    )
 
     if st.button("Submit Grievance", type="primary"):
     
