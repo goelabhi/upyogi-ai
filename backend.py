@@ -4,6 +4,7 @@ import json
 import sqlite3
 import base64
 import json
+import whisper
 
 from langchain_core.messages import HumanMessage
 from langchain_openrouter import ChatOpenRouter
@@ -19,7 +20,7 @@ llm = ChatOpenRouter(
 )
 
 embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
-
+whisper_model = whisper.load_model("base")
 
 # ---------- DATABASE ----------
 
