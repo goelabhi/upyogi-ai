@@ -32,7 +32,7 @@ def transcribe_voice(audio_bytes):
     "temp_audio.wav",
     language="hi",
     task="transcribe"
-)
+    )
 
     return result["text"].strip()
 
