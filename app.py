@@ -3,6 +3,7 @@ import streamlit as st
 from backend import (
     submit_grievance,
     save_image_grievance,
+    transcribe_voice,
     get_all_grievances,
     update_status,
     get_officer_intelligence
@@ -71,7 +72,7 @@ if role == "Citizen":
 
     if st.button("Submit Grievance", type="primary"):
     
-        if not complaint.strip() and uploaded_image is None:
+        if not complaint.strip() and uploaded_image is None and audio_input is None:
             st.warning("Please describe your grievance or upload a photo.")
     
         elif uploaded_image is not None:
