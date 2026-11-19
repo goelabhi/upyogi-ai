@@ -21,6 +21,18 @@ llm = ChatOpenRouter(
 
 embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
 whisper_model = whisper.load_model("base")
+#takes the recorded audio, temporarily saves it as a WAV file, 
+#sends it to Whisper, and returns the transcribed text.
+    def transcribe_voice(audio_bytes):
+    
+        with open("temp_audio.wav", "wb") as f:
+            f.write(audio_bytes)
+    
+        result = whisper_model.transcribe(
+            "temp_audio.wav"
+        )
+
+    return result["text"].strip()
 
 # ---------- DATABASE ----------
 
