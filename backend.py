@@ -10,7 +10,8 @@ from langchain_core.messages import HumanMessage
 from langchain_openrouter import ChatOpenRouter
 from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
-
+from indic_transliteration import sanscript
+from indic_transliteration.sanscript import transliterate
 
 # ---------- AI ----------
 
